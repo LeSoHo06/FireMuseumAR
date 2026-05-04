@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Objekte – Feuerwehrmuseum</title>
+  <link href="https://fonts.googleapis.com/css2?family=Simonetta:ital,wght@0,400;0,900;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="products-page">
+
+  <main class="app-frame product-screen">
+
+    <section class="hero-area" id="hero-area">
+      <div class="action-btns">
+        <button class="pill-btn" type="button" onclick="openAR()">Im Raum ansehen</button>
+        <button class="pill-btn" type="button" onclick="openVideo()">Video ansehen</button>
+      </div>
+
+      <a id="ar-link" rel="ar" href="resources/feuerloescher_rot.usdz" class="model-link">
+        <img id="model-img" src="images/grafik-16-47.png" class="model-img" alt="Feuerlöscher">
+      </a>
+
+      <div class="label-overlay" id="labels" aria-hidden="true">
+        <div class="label-item label-ventil right">
+          <span class="label-dot"></span>
+          <span class="label-line"></span>
+          <span class="label-text">Ventil</span>
+        </div>
+        <div class="label-item label-schlauch left">
+          <span class="label-text">Schlauch</span>
+          <span class="label-line"></span>
+          <span class="label-dot"></span>
+        </div>
+        <div class="label-item label-etikett left">
+          <span class="label-text">Etikett</span>
+          <span class="label-line"></span>
+          <span class="label-dot"></span>
+        </div>
+        <div class="label-item label-behaelter right">
+          <span class="label-dot"></span>
+          <span class="label-line"></span>
+          <span class="label-text">Behälter</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="control-area">
+      <div class="beschreibung-row">
+        <span>Beschreibung</span>
+        <label class="toggle-switch" aria-label="Beschreibung ein- oder ausblenden">
+          <input type="checkbox" id="toggle-desc" onchange="toggleDesc(this)">
+          <span class="slider-thumb"></span>
+        </label>
+      </div>
+
+      <div class="funktionsweise-row">
+        <button class="pill-btn" type="button" onclick="openFunktionsweise()">Funktionsweise</button>
+      </div>
+
+      <div class="epoch-bar" id="epoch-bar">
+        <button class="epoch-btn active" type="button" data-year="1920">1920</button>
+        <button class="epoch-btn" type="button" data-year="1929">1929</button>
+        <button class="epoch-btn" type="button" data-year="1948">1948</button>
+        <button class="epoch-btn" type="button" data-year="1952">1952</button>
+      </div>
+    </section>
+  </main>
+
+  <div class="overlay" id="funktionsweise-overlay" aria-hidden="true">
+    <div class="funktionsweise-card" role="dialog" aria-modal="true" aria-labelledby="fw-title">
+      <div class="funktionsweise-content">
+        <h2 id="fw-title">Funktionsweise</h2>
+        <ol id="fw-list"></ol>
+      </div>
+      <button class="round-close" type="button" onclick="closeFunktionsweise()" aria-label="Schliessen">X</button>
+    </div>
+  </div>
+
+  <div class="overlay" id="video-overlay" aria-hidden="true">
+    <div class="video-card" role="dialog" aria-modal="true">
+      <div class="video-placeholder">
+        <div class="play-icon">▶</div>
+        <button class="video-close" type="button" onclick="closeVideo()">Video beenden</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+const epochs = {
+  "1920": {
+    bg: "images/grafik-10-17.png",
+    img: "images/grafik-16-47.png",
+    usdz: "resources/feuerloescher_rot.usdz",
+    labels: { ventil:[56,44,'Ventil'], schlauch:[1,51,'Schlauch'], etikett:[13,68,'Etikett'], behaelter:[54,79,'Behälter'] },
+    steps: [
+      "Sicherungsstift abziehen<br><span>→ Gerät ist einsatzbereit</span>",
+      "Auslösehebel nach unten drücken",
+      "Öffnet das Ventil",
+      "Wasser und Schaumextrakt treten durch den Schlauch aus und ersticken das Feuer"
+    ]
+  },
+  "1929": {
+    bg: "images/grafik-10-44.png",
+    img: "images/grafik-17-91.png",
+    usdz: "resources/feuerloescher_anhang.usdz",
+    labels: { ventil:[63,46,'Ventil'], schlauch:[17,81,'Treibgasflasche'], etikett:[11,51,'Etikett'], behaelter:[41,88,'Düse'] },
+    steps: [
+      "Absperrventil öffnen",
+      "CO₂ aus der Treibgasflasche strömt in den Behälter",
+      "Druck treibt das Löschmittel durch die Düse",
+      "Kohlensäure erstickt das Feuer durch Sauerstoffentzug"
+    ]
+  },
+  "1948": {
+    bg: "images/grafik-10-82.png",
+    img: "images/grafik-18-113.png",
+    usdz: "resources/feuerloescher_chrom.usdz",
+    labels: { ventil:[49,44,'Ventil'], schlauch:[15,80,'Behälter'], etikett:[18,61,'Etikett'], behaelter:[62,60,'Griff'] },
+    steps: [
+      "Sicherung lösen und Hebel betätigen",
+      "Salzsäure und Natriumhydrogencarbonat reagieren miteinander",
+      "Die chemische Reaktion erzeugt Druck im Behälter",
+      "Löschmittel wird durch den Schlauch auf das Feuer gesprüht"
+    ]
+  },
+  "1952": {
+    bg: "images/grafik-10-111.png",
+    img: "images/grafik-19-145.png",
+    usdz: "resources/feuerloescher_hand.usdz",
+    labels: { ventil:[48,45,'Druckknopf'], schlauch:[6,64,'Behälter'], etikett:[19,59,'Pistolengriff'], behaelter:[50,80,'Etikett'] },
+    steps: [
+      "Sicherungsstift abziehen",
+      "Druckknopf oben eindrücken",
+      "Tetrachlorkohlenstoff wird durch den Druck freigesetzt",
+      "Das Gas unterbricht die chemische Reaktion des Feuers"
+    ]
+  }
+};
+
+let currentYear = "1920";
+
+function setEpoch(year) {
+  const item = epochs[year];
+  currentYear = year;
+  document.querySelector('.product-screen').style.backgroundImage = `url('${item.bg}')`;
+  document.getElementById('model-img').src = item.img;
+  document.getElementById('ar-link').href = item.usdz;
+  document.querySelectorAll('.epoch-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.year === year));
+  document.getElementById('toggle-desc').checked = false;
+  document.getElementById('labels').classList.remove('is-visible');
+  document.getElementById('model-img').className = 'model-img' + (year === '1920' ? ' model-img--large' : '');
+  moveLabels(item.labels);
+  fillSteps(item.steps);
+}
+
+function moveLabels(labels) {
+  Object.entries(labels).forEach(([name, pos]) => {
+    const el = document.querySelector(`.label-item.label-${name}`);
+    if (!el) return;
+    el.style.left = pos[0] + '%';
+    el.style.top = pos[1] + '%';
+    const textEl = el.querySelector('.label-text');
+    if (textEl && pos[2]) textEl.textContent = pos[2];
+  });
+}
+
+function fillSteps(steps) {
+  document.getElementById('fw-list').innerHTML = steps.map(step => `<li>${step}</li>`).join('');
+}
+
+function toggleDesc(toggle) {
+  document.getElementById('labels').classList.toggle('is-visible', toggle.checked);
+}
+
+function openAR() {
+  document.getElementById('ar-link').click();
+}
+
+function openVideo() {
+  const overlay = document.getElementById('video-overlay');
+  overlay.classList.add('is-open');
+  overlay.setAttribute('aria-hidden', 'false');
+}
+
+function closeVideo() {
+  const overlay = document.getElementById('video-overlay');
+  overlay.classList.remove('is-open');
+  overlay.setAttribute('aria-hidden', 'true');
+}
+
+function openFunktionsweise() {
+  fillSteps(epochs[currentYear].steps);
+  const overlay = document.getElementById('funktionsweise-overlay');
+  overlay.classList.add('is-open');
+  overlay.setAttribute('aria-hidden', 'false');
+}
+
+function closeFunktionsweise() {
+  const overlay = document.getElementById('funktionsweise-overlay');
+  overlay.classList.remove('is-open');
+  overlay.setAttribute('aria-hidden', 'true');
+}
+
+document.querySelectorAll('.epoch-btn').forEach(btn => btn.addEventListener('click', () => setEpoch(btn.dataset.year)));
+document.querySelectorAll('.overlay').forEach(overlay => overlay.addEventListener('click', e => {
+  if (e.target === overlay) {
+    closeVideo();
+    closeFunktionsweise();
+  }
+}));
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeVideo();
+    closeFunktionsweise();
+  }
+});
+
+setEpoch(currentYear);
+</script>
+</body>
+</html>

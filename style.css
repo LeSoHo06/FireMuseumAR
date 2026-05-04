@@ -1,0 +1,325 @@
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+html, body { min-height: 100%; background: transparent; }
+
+body {
+  font-family: 'Simonetta', Georgia, serif;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+.app-frame, body > #screen1, body > #screen2 {
+  width: min(100vw, 393px);
+  min-height: 100svh;
+  margin: 0 auto;
+}
+
+.product-screen {
+  position: relative;
+  height: 100svh;
+  overflow: hidden;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.product-screen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.266);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-area {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.control-area { flex: 0 0 auto; background: transparent; position: relative; z-index: 2; }
+
+.action-btns {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  padding-top: max(20px, env(safe-area-inset-top));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 13px;
+}
+
+.pill-btn {
+  width: 248px;
+  min-height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,1);
+  background: rgba(255,255,255,0.661);
+  color: #000;
+  font: 500 25px/1 'Simonetta', Georgia, serif;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.model-link {
+  position: absolute;
+  inset: 126px 0 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 2;
+}
+
+.model-img {
+  height: min(78%, 560px);
+  max-width: 86%;
+  object-fit: contain;
+  display: block;
+  filter: brightness(1.3);
+}
+
+.model-img--large {
+  transform: scale(1.3) translateY(10%);
+  transform-origin: bottom center;
+}
+
+.label-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s ease;
+}
+
+.label-overlay.is-visible { opacity: 1; }
+
+.label-item {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.label-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fff;
+  flex-shrink: 0;
+}
+
+.label-line {
+  width: 50px;
+  height: 1px;
+  background: #fff;
+  flex-shrink: 0;
+}
+
+.label-text {
+  color: #fff;
+  font-size: 20px;
+  white-space: nowrap;
+  padding: 0 6px;
+}
+
+.beschreibung-row {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: #fff;
+  font-size: 25px;
+  background: transparent;
+  border-top: none;
+  transform: translateY(-40%);
+}
+
+.toggle-switch { position: relative; width: 51px; height: 31px; display: inline-block; }
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.slider-thumb { position: absolute; inset: 0; background: rgba(0,0,0,0.4); border-radius: 999px; transition: .2s; border: 1px solid rgba(255,255,255,.3); }
+.slider-thumb::before { content: ''; position: absolute; width: 27px; height: 27px; left: 2px; top: 1px; border-radius: 50%; background: white; transition: .2s; }
+.toggle-switch input:checked + .slider-thumb { background: rgba(120,20,18,.8); }
+.toggle-switch input:checked + .slider-thumb::before { transform: translateX(20px); }
+
+.funktionsweise-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0;
+  background: transparent;
+  border: none;
+  transform: translateY(-60%);
+}
+
+.epoch-bar {
+  display: flex;
+  align-items: center;
+  background: #c8c8c8;
+  border: 2px solid #fff;
+  margin: -3px;
+  transform: translateY(-40%);
+  height: 52px;
+  padding: 0;
+  gap: 0;
+}
+
+.epoch-btn {
+  border: none;
+  border-right: 1px solid #fff;
+  background: #c8c8c8;
+  color: #000;
+  font: 400 22px/1 'Simonetta', Georgia, serif;
+  cursor: pointer;
+  padding: 0;
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.epoch-btn:last-child { border-right: none; }
+
+.epoch-btn.active {
+  background: #fff;
+  color: #000;
+  font-weight: 700;
+  font-size: 24px;
+  border-right: 1px solid #aaa;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: none;
+  background: transparent;
+}
+
+.overlay.is-open { display: flex; }
+
+#video-overlay {
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0;
+}
+
+#funktionsweise-overlay {
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+  background: rgba(0,0,0,0.5);
+}
+
+.video-card {
+  width: min(393px, 100%);
+  height: 75svh;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0 0 24px 24px;
+  overflow: hidden;
+}
+
+.overlay.is-open .video-card {
+  animation: slideDown 0.3s ease forwards;
+}
+
+.overlay.is-open .funktionsweise-card {
+  animation: slideUp 0.3s ease forwards;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.video-placeholder {
+  flex: 1;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  color: #fff;
+  position: relative;
+}
+
+.play-icon { font-size: 52px; }
+
+.video-close {
+  position: absolute;
+  bottom: 20px;
+  padding: 8px 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.35);
+  color: white;
+  background: rgba(255,255,255,.15);
+  font-family: 'Simonetta', Georgia, serif;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.funktionsweise-card {
+  position: relative;
+  width: min(395px, 100%);
+  max-height: calc(100svh - 48px);
+  overflow: auto;
+  background: #fff;
+  color: #000;
+  border-radius: 24px 24px 0 0;
+  box-shadow: 0 -8px 40px rgba(0,0,0,.35);
+}
+
+.funktionsweise-img {
+  width: 100%;
+  height: 300px;
+  background: url('images/funktionsweise.png') center/contain no-repeat;
+  background-color: #f5f5f5;
+}
+
+.funktionsweise-content { padding: 14px 24px 58px; }
+.funktionsweise-content h2 { font-size: 29px; font-weight: 400; margin-bottom: 18px; }
+.funktionsweise-content ol { padding-left: 20px; font-size: 19px; line-height: 1.24; }
+.funktionsweise-content li { margin-bottom: 22px; }
+.funktionsweise-content span { display: inline-block; margin-left: 18px; }
+
+.round-close {
+  position: absolute;
+  right: 14px;
+  bottom: 12px;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(0,0,0,.25);
+  color: #fff;
+  font: 400 28px/1 Arial, sans-serif;
+  cursor: pointer;
+}
+
+@media (min-width: 500px) {
+  body { background: #1f1f1f; }
+  .product-screen { box-shadow: 0 0 0 1px rgba(255,255,255,.164); }
+}

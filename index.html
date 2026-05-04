@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feuerwehrmuseum St. Gallen</title>
+  <link href="https://fonts.googleapis.com/css2?family=Simonetta:ital,wght@0,400;0,900;1,400&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Simonetta', Georgia, serif;
+      background: #000000;
+      color: #fff;
+      max-width: 393px;
+      margin: 0 auto;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── SCREEN 1 ── */
+    #screen1 {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #000000;
+      padding: 0 28px;
+    }
+
+    .s1-icon-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 40px;
+    }
+
+    .s1-icon-wrap img {
+      width: 200px;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .s1-bottom {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 156px;
+    }
+
+    .s1-title {
+      font-size: 36px;
+      font-weight: 400;
+      color: #ffffff;
+      text-align: center;
+      line-height: 1.15;
+      letter-spacing: 0.3px;
+      margin-bottom: 62px;
+    }
+
+    .s1-btn {
+      display: block;
+      width: 206px;
+      background: #6e1b19;
+      border: 1px solid #db3632;
+      color: #ffffff;
+      font-size: 22px;
+      font-family: 'Simonetta', Georgia, serif;
+      font-weight: 400;
+      padding: 13px 24px;
+      border-radius: 30px;
+      text-decoration: none;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    /* ── SCREEN 2 ── */
+    #screen2 {
+      display: none;
+      min-height: 100vh;
+      flex-direction: column;
+      background: #000000;
+      padding: 44px 0 84px;
+    }
+
+    .s2-toprow {
+      display: flex;
+      justify-content: flex-end;
+      padding: 0 20px;
+      margin-bottom: 23px;
+    }
+
+    .s2-toprow img {
+      width: 44px;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .s2-title {
+      font-size: 28px;
+      font-weight: 400;
+      color: #ffffff;
+      text-align: center;
+      line-height: 1.0;
+      padding: 0 20px;
+      margin-bottom: 49px;
+    }
+
+    .s2-box {
+      background: #6e1b19;
+      border: 1px solid #db3632;
+      border-radius: 20px;
+      padding: 24px 24px;
+      margin: 0 28px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .s2-box p {
+      font-size: 18px;
+      color: #ffffff;
+      text-align: center;
+      line-height: 1.55;
+    }
+
+    .s2-spacer {
+      height: 20px;
+    }
+
+    .s2-bottom {
+      padding: 46px 28px 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .s2-btn {
+      display: block;
+      width: 242px;
+      background: #6e1b19;
+      border: 1px solid #db3632;
+      color: #ffffff;
+      font-size: 22px;
+      font-family: 'Simonetta', Georgia, serif;
+      font-weight: 400;
+      padding: 14px 24px;
+      border-radius: 30px;
+      text-decoration: none;
+      text-align: center;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SCREEN 1 -->
+  <div id="screen1">
+    <div class="s1-icon-wrap">
+      <img src="resources/grafik.png" alt="Feuerlöscher">
+    </div>
+
+    <div class="s1-bottom">
+      <h1 class="s1-title">Feuerwehrmuseum<br>St. Gallen</h1>
+      <button class="s1-btn" onclick="showScreen2()">App Starten</button>
+    </div>
+  </div>
+
+  <!-- SCREEN 2 -->
+  <div id="screen2">
+    <div class="s2-toprow">
+      <img src="resources/grafik.png" alt="Icon">
+    </div>
+
+    <h2 class="s2-title">Willkommen im<br>Feuerwehrmuseum St. Gallen</h2>
+
+    <div class="s2-box">
+      <p>Diese App begleitet dich durch die Geschichte der Handfeuerlöscher.</p>
+      <div class="s2-spacer"></div>
+      <p>Entdecke vier originale Geräte aus den Jahren 1920 bis 1952 und erfahre mehr über ihre Funktionsweise und die damals verwendeten Löschmittel.</p>
+      <div class="s2-spacer"></div>
+      <p>Wähle eine Epoche aus und erlebe sie hautnah in Augmented Reality.</p>
+    </div>
+
+    <div class="s2-bottom">
+      <a href="products.html" class="s2-btn">Objekte ansehen</a>
+    </div>
+  </div>
+
+  <script>
+    function showScreen2() {
+      document.getElementById('screen1').style.display = 'none';
+      document.getElementById('screen2').style.display = 'flex';
+    }
+  </script>
+
+</body>
+</html>
